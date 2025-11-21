@@ -5,72 +5,229 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.chamathka</groupId>
-    <artifactId>clothstore</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>clothstore</name>
+    <artifactId>batik-pos</artifactId>
+    <version>1.0.0</version>
+    <name>Batik POS System</name>
+    <description>A comprehensive Point of Sale system for Batik clothing retail store</description>
 
     <properties>
+        <!-- Project Encoding -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.10.0</junit.version>
+
+        <!-- Java Version (as per SRS: Java 17+) -->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+
+        <!-- Dependency Versions -->
+        <javafx.version>21.0.1</javafx.version>
+        <hibernate.version>6.4.1.Final</hibernate.version>
+        <mysql.connector.version>8.2.0</mysql.connector.version>
+        <bcrypt.version>0.10.2</bcrypt.version>
+        <junit.version>5.10.1</junit.version>
+        <bootstrapfx.version>0.4.0</bootstrapfx.version>
     </properties>
 
     <dependencies>
+        <!-- ==================== JavaFX Dependencies ==================== -->
+        <!-- JavaFX Controls (Buttons, TextFields, etc.) -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>17.0.6</version>
+            <version>${javafx.version}</version>
         </dependency>
+
+        <!-- JavaFX FXML (for FXML-based UI as per SRS Section 7.5) -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>17.0.6</version>
+            <version>${javafx.version}</version>
         </dependency>
+
+        <!-- JavaFX Graphics (for rendering) -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+        <!-- BootstrapFX for modern UI styling -->
         <dependency>
             <groupId>org.kordamp.bootstrapfx</groupId>
             <artifactId>bootstrapfx-core</artifactId>
-            <version>0.4.0</version>
+            <version>${bootstrapfx.version}</version>
         </dependency>
+
+        <!-- ==================== Hibernate & JPA Dependencies ==================== -->
+        <!-- Hibernate Core (ORM - as per SRS Section 3.1) -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <!-- Jakarta Persistence API (JPA Specification) -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <!-- ==================== Database Drivers ==================== -->
+        <!-- MySQL Connector (as per SRS Section 1.6) -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql.connector.version}</version>
+        </dependency>
+
+        <!-- Optional: PostgreSQL Driver (alternative to MySQL) -->
+        <!-- Uncomment if you want to use PostgreSQL instead -->
+        <!--
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.1</version>
+        </dependency>
+        -->
+
+        <!-- ==================== Security Dependencies ==================== -->
+        <!-- BCrypt for password hashing (as per FR-AUTH-02) -->
+        <dependency>
+            <groupId>at.favre.lib</groupId>
+            <artifactId>bcrypt</artifactId>
+            <version>${bcrypt.version}</version>
+        </dependency>
+
+        <!-- ==================== Utility Dependencies ==================== -->
+        <!-- SLF4J API (Logging API) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.9</version>
+        </dependency>
+
+        <!-- Logback Classic (Logging Implementation) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.14</version>
+        </dependency>
+
+        <!-- Apache Commons Lang (Utility methods for String, Date, etc.) -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+
+        <!-- ==================== Thermal Printer Support ==================== -->
+        <!-- ESCPOS Coffee (For thermal receipt printing - FR-POS-11) -->
+        <dependency>
+            <groupId>com.github.anastaciocintra</groupId>
+            <artifactId>escpos-coffee</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
+        <!-- ==================== Testing Dependencies ==================== -->
+        <!-- JUnit 5 API -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- JUnit 5 Engine -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Mockito for mocking (useful for testing Services) -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.8.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.12.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>17</source>
+                    <target>17</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
+            <!-- JavaFX Maven Plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.chamathka.clothstore/com.chamathka.clothstore.HelloApplication</mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
+                            <!-- Main Application Class (update this once created) -->
+                            <mainClass>com.chamathka.batikpos.BatikPOSApplication</mainClass>
+                            <launcher>BatikPOS</launcher>
+                            <jlinkZipName>batik-pos</jlinkZipName>
+                            <jlinkImageName>batik-pos</jlinkImageName>
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
                             <noHeaderFiles>true</noHeaderFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven Surefire Plugin (for running tests) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.3</version>
+            </plugin>
+
+            <!-- Maven JAR Plugin (for creating executable JAR) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.chamathka.batikpos.BatikPOSApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Shade Plugin (for creating fat JAR with all dependencies) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.chamathka.batikpos.BatikPOSApplication</mainClass>
+                                </transformer>
+                            </transformers>
                         </configuration>
                     </execution>
                 </executions>
