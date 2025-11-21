@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<!--
+    Hibernate Configuration File for Batik POS System
+    This file configures the database connection and ORM settings as per SRS Section 3.2
+-->
+<hibernate-configuration>
+    <session-factory>
+        <!-- ==================== Database Connection Settings ==================== -->
+
+        <!-- JDBC Database Connection URL -->
+        <!-- Update 'localhost:3306' if your MySQL server is on a different host/port -->
+        <!-- Update 'batik_pos_db' to your desired database name -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/batik_pos_db?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true</property>
+
+        <!-- Database Username -->
+        <!-- IMPORTANT: Change this to your MySQL username -->
+        <property name="hibernate.connection.username">root</property>
+
+        <!-- Database Password -->
+        <!-- IMPORTANT: Change this to your MySQL password -->
+        <property name="hibernate.connection.password">root</property>
+
+        <!-- JDBC Driver Class -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+
+        <!-- ==================== Hibernate Dialect ==================== -->
+        <!-- Specifies the SQL dialect for MySQL 8.x -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+        <!-- ==================== Connection Pool Settings ==================== -->
+        <!-- HikariCP is the default connection pool in Hibernate 6.x -->
+        <!-- Minimum number of idle connections in the pool -->
+        <property name="hibernate.hikari.minimumIdle">5</property>
+
+        <!-- Maximum number of connections in the pool -->
+        <property name="hibernate.hikari.maximumPoolSize">20</property>
+
+        <!-- Connection timeout (30 seconds) -->
+        <property name="hibernate.hikari.connectionTimeout">30000</property>
+
+        <!-- ==================== Schema Generation ==================== -->
+        <!--
+            hbm2ddl.auto options:
+            - validate: Validate the schema, make no changes to the database
+            - update: Update the schema (add new tables/columns, but never drops)
+            - create: Create the schema, destroying previous data
+            - create-drop: Drop the schema when SessionFactory is closed (for testing)
+
+            For DEVELOPMENT: use "update" to auto-create tables
+            For PRODUCTION: use "validate" and manage schema manually
+        -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- ==================== Logging & Debugging ==================== -->
+        <!-- Show SQL statements in console (useful for debugging) -->
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- Format SQL statements for readability -->
+        <property name="hibernate.format_sql">true</property>
+
+        <!-- Show SQL comments (entity names, etc.) -->
+        <property name="hibernate.use_sql_comments">true</property>
+
+        <!-- Log SQL bind parameter values (requires DEBUG level logging) -->
+        <!-- <property name="hibernate.show_sql">true</property> -->
+
+        <!-- ==================== Performance & Caching ==================== -->
+        <!-- Enable second-level cache (optional - can be configured later) -->
+        <!-- <property name="hibernate.cache.use_second_level_cache">true</property> -->
+
+        <!-- Enable query cache (optional) -->
+        <!-- <property name="hibernate.cache.use_query_cache">true</property> -->
+
+        <!-- Batch size for batch processing -->
+        <property name="hibernate.jdbc.batch_size">20</property>
+
+        <!-- Order SQL inserts by primary key (improves batching) -->
+        <property name="hibernate.order_inserts">true</property>
+
+        <!-- Order SQL updates by primary key (improves batching) -->
+        <property name="hibernate.order_updates">true</property>
+
+        <!-- ==================== Transaction Settings ==================== -->
+        <!-- Current session context (for easier session management) -->
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <!-- ==================== Additional Settings ==================== -->
+        <!-- Enable JPA-style named queries -->
+        <property name="hibernate.query.jpa_compliant_query_string_format">true</property>
+
+        <!-- Time zone handling -->
+        <property name="hibernate.jdbc.time_zone">UTC</property>
+
+        <!-- ==================== Entity Mappings ==================== -->
+        <!--
+            Register all Entity classes here.
+            These will be created in Phase 1, Step 3.
+            When you create each entity, it will be automatically discovered if you use annotations,
+            but listing them here is explicit and recommended.
+        -->
+
+        <!-- User Authentication -->
+        <mapping class="com.chamathka.batikpos.entity.User"/>
+
+        <!-- Customer Management -->
+        <mapping class="com.chamathka.batikpos.entity.Customer"/>
+
+        <!-- Supplier Management -->
+        <mapping class="com.chamathka.batikpos.entity.Supplier"/>
+
+        <!-- Inventory Management -->
+        <mapping class="com.chamathka.batikpos.entity.Product"/>
+        <mapping class="com.chamathka.batikpos.entity.ProductVariant"/>
+
+        <!-- Goods Received Note (Stock Intake) -->
+        <mapping class="com.chamathka.batikpos.entity.GRN"/>
+        <mapping class="com.chamathka.batikpos.entity.GRNItem"/>
+
+        <!-- Sales Transactions -->
+        <mapping class="com.chamathka.batikpos.entity.Sale"/>
+        <mapping class="com.chamathka.batikpos.entity.SaleItem"/>
+
+    </session-factory>
+</hibernate-configuration>
