@@ -72,6 +72,29 @@
             <version>3.1.0</version>
         </dependency>
 
+        <!-- Jakarta Transactions API (JTA) -->
+        <dependency>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <!-- Jakarta XML Binding API (JAXB) -->
+        <!-- Required by Hibernate for XML mapping -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+        <!-- JAXB Runtime (Implementation) -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>4.0.2</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- ==================== Database Drivers ==================== -->
         <!-- MySQL Connector (as per SRS Section 1.6) -->
         <dependency>
